@@ -227,7 +227,7 @@ Bulk media and other large datasets will use separate storage and recovery metho
 
 
 
-!\[Proxmox Media Server Architecture](../../diagrams/media-server-architecture.svg)
+![Proxmox Media Server Architecture](../../diagrams/media-server-architecture.svg)
 
 
 
