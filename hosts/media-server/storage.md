@@ -198,7 +198,7 @@ The storage architecture is documented visually in the following diagram:
 
 
 
-!\[Media Server Storage Diagram](../../diagrams/media-server-storage.svg)
+![Media Server Storage Diagram](../../diagrams/media-server-storage.svg)
 
 
 
