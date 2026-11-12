@@ -1,16 +1,8 @@
-\# Media Server Storage
+# Media Server Storage
 
 
 
-
-
-
-
-\## Overview
-
-
-
-
+## Overview
 
 
 
@@ -18,15 +10,7 @@ The media server uses storage managed by the Proxmox host, with system and appli
 
 
 
-
-
-
-
 During the initial deployment, media files were stored within the Docker container's root filesystem. This approach quickly became unsuitable because the container had limited storage capacity and media files consumed significantly more space than the operating system and application data.
-
-
-
-
 
 
 
@@ -34,15 +18,7 @@ To address this, additional storage was allocated from a larger Proxmox storage 
 
 
 
-
-
-
-
-\## Current Storage Model
-
-
-
-
+## Current Storage Model
 
 
 
@@ -50,17 +26,8 @@ The current storage design separates storage into two primary roles:
 
 
 
-
-
-
-
-\* System and application storage — Used for storing container operating systems, installed applications, configuration files, and other application-related data.
-
-\* Media storage — A separate, larger virtual storage volume used for media files.
-
-
-
-
+* System and application storage — Used for storing container operating systems, installed applications, configuration files, and other application-related data.
+* Media storage — A separate, larger virtual storage volume used for media files.
 
 
 
@@ -68,15 +35,7 @@ The original container root filesystem was approximately 40 GB and was not inten
 
 
 
-
-
-
-
 The Proxmox host also contained a significantly larger storage pool of approximately 900 GB. Approximately 700 GB of this capacity was allocated for media storage rather than expanding the Docker container's root filesystem.
-
-
-
-
 
 
 
@@ -84,15 +43,7 @@ This design keeps large media files separate from each container's primary files
 
 
 
-
-
-
-
-\## Proxmox Storage
-
-
-
-
+## Proxmox Storage
 
 
 
@@ -100,15 +51,7 @@ The Proxmox host uses two primary storage areas with different roles.
 
 
 
-
-
-
-
 The `local` storage provides approximately 100 GB of capacity and is primarily used for ISO images, container templates, and Proxmox backups.
-
-
-
-
 
 
 
@@ -116,23 +59,11 @@ The `local-lvm` storage provides approximately 900 GB of capacity and is used fo
 
 
 
-
-
-
-
 This separates Proxmox installation and recovery resources from the larger storage pool used by containers and the media library.
 
 
 
-
-
-
-
-\## Container Storage
-
-
-
-
+## Container Storage
 
 
 
@@ -140,15 +71,7 @@ Each container maintains its own root filesystem for the operating system, appli
 
 
 
-
-
-
-
 Media files are not intended to be permanently stored within these root filesystems.
-
-
-
-
 
 
 
@@ -156,23 +79,11 @@ This separation became necessary after the original media deployment began consu
 
 
 
-
-
-
-
 This approach also makes it easier to modify or rebuild application services without treating the media library as part of the container's operating system storage.
 
 
 
-
-
-
-
-\## Mount Points
-
-
-
-
+## Mount Points
 
 
 
@@ -180,23 +91,11 @@ The media storage volume is created and managed by Proxmox and exposed to the ap
 
 
 
-
-
-
-
 Configuring these mount points initially required additional troubleshooting because container permissions prevented the media services from accessing the storage correctly. After adjusting the mount configuration and permissions, the media library became accessible to the appropriate services.
 
 
 
-
-
-
-
-\## Media Data Organization
-
-
-
-
+## Media Data Organization
 
 
 
@@ -204,15 +103,7 @@ Media data is kept separate from system and application files.
 
 
 
-
-
-
-
 The dedicated media storage contains the library content consumed by media services, while application configuration and operating-system data remain within their respective container storage locations.
-
-
-
-
 
 
 
@@ -220,15 +111,7 @@ Media files are organized into separate directories based on content type, such 
 
 
 
-
-
-
-
 The exact directory structure can be expanded as additional media types or services are introduced.
-
-
-
-
 
 
 
@@ -236,15 +119,7 @@ Keeping the media library centralized also prevents individual applications from
 
 
 
-
-
-
-
-\## Permissions and Access
-
-
-
-
+## Permissions and Access
 
 
 
@@ -252,15 +127,7 @@ Storage configuration was one of the primary challenges encountered while implem
 
 
 
-
-
-
-
 During the initial setup, media files were being written to the smaller `local` storage instead of the larger media volume allocated from `local-lvm`. This caused the available space on the local storage to be consumed much faster than intended.
-
-
-
-
 
 
 
@@ -268,23 +135,11 @@ The final configuration corrected the storage path and mount setup so that media
 
 
 
-
-
-
-
 Access permissions were then configured so that Jellyfin and the Docker-based media services could use the shared media storage as required.
 
 
 
-
-
-
-
-\## Storage Maintenance
-
-
-
-
+## Storage Maintenance
 
 
 
@@ -292,29 +147,14 @@ Storage maintenance focuses on preserving sufficient free capacity and ensuring 
 
 
 
-
-
-
-
 Routine storage checks include:
 
-
-
-\* Monitoring available capacity on both the container root filesystem and media storage.
-
-\* Verifying that the media storage mount is available after container or host restarts.
-
-\* Checking file and directory permissions when applications cannot access media.
-
-\* Avoiding unnecessary storage of large media files within the container root filesystem.
-
-\* Verifying application access after storage or permission changes.
-
-\* Documenting significant storage changes before modifying the existing configuration.
-
-
-
-
+* Monitoring available capacity on both the container root filesystem and media storage.
+* Verifying that the media storage mount is available after container or host restarts.
+* Checking file and directory permissions when applications cannot access media.
+* Avoiding unnecessary storage of large media files within the container root filesystem.
+* Verifying application access after storage or permission changes.
+* Documenting significant storage changes before modifying the existing configuration.
 
 
 
@@ -322,15 +162,7 @@ Keeping system storage and media storage separate also makes storage-related pro
 
 
 
-
-
-
-
-\## Planned Improvements
-
-
-
-
+## Planned Improvements
 
 
 
@@ -338,31 +170,15 @@ The current storage configuration provides sufficient capacity for the existing 
 
 
 
-
-
-
-
 Future improvements may include:
 
-
-
-\* Moving bulk media storage to dedicated storage hardware.
-
-\* Introducing a NAS or other centralized storage system.
-
-\* Increasing available media capacity as the library grows.
-
-\* Improving redundancy for important data.
-
-\* Implementing a more comprehensive backup and recovery strategy.
-
-\* Further separating persistent application data from individual containers.
-
-\* Improving storage monitoring and capacity alerts.
-
-
-
-
+* Moving bulk media storage to dedicated storage hardware.
+* Introducing a NAS or other centralized storage system.
+* Increasing available media capacity as the library grows.
+* Improving redundancy for important data.
+* Implementing a more comprehensive backup and recovery strategy.
+* Further separating persistent application data from individual containers.
+* Improving storage monitoring and capacity alerts.
 
 
 
@@ -370,23 +186,11 @@ A dedicated NAS would allow the Proxmox host to focus primarily on compute workl
 
 
 
-
-
-
-
 Until that infrastructure is introduced, the current virtual storage configuration provides a practical separation between system storage and bulk media storage.
 
 
 
-
-
-
-
-\## Storage Diagram
-
-
-
-
+## Storage Diagram
 
 
 
@@ -394,21 +198,9 @@ The storage architecture is documented visually in the following diagram:
 
 
 
-
-
-
-
 !\[Media Server Storage Diagram](../../diagrams/media-server-storage.svg)
 
 
 
-
-
-
-
 The diagram shows the relationship between the physical storage available to the Proxmox host, the Proxmox storage backends, the dedicated media volume, container mount points, and the applications that access the shared media library.
-
-
-
-
 
