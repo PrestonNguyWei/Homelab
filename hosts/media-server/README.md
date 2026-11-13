@@ -106,7 +106,7 @@ The dedicated media volume is exposed to the appropriate containers through Prox
 
 For the complete storage design, troubleshooting history, and planned improvements, see:
 
-\[Storage Documentation](storage.md)
+[Storage Documentation](storage.md)
 
 
 
@@ -127,7 +127,7 @@ The current backup strategy uses multiple methods for different recovery needs.
 
 For the full backup strategy, recovery procedures, limitations, and planned improvements, see:
 
-\[Backup and Recovery](backup.md)
+[Backup and Recovery](backup.md)
 
 
 
@@ -207,10 +207,10 @@ Planned improvements include:
 
 Detailed documentation for the current media-server environment is available below:
 
-* \[Architecture](architecture.md)
-* \[Storage](storage.md)
-* \[Backup and Recovery](backup.md)
-* \[Troubleshooting](troubleshooting.md)
+* [Architecture](architecture.md)
+* [Storage](storage.md)
+* [Backup and Recovery](backup.md)
+* [Troubleshooting](troubleshooting.md)
 
 
 
