@@ -36,10 +36,10 @@ Detailed documentation for the current media-server environment is available bel
 
 
 
-* \[Architecture](hosts/media-server/architecture.md)
-* \[Storage](hosts/media-server/storage.md)
-* \[Backup and Recovery](hosts/media-server/backup.md)
-* \[Troubleshooting](hosts/media-server/troubleshooting.md)
+* [Architecture](hosts/media-server/architecture.md)
+* [Storage](hosts/media-server/storage.md)
+* [Backup and Recovery](hosts/media-server/backup.md)
+* [Troubleshooting](hosts/media-server/troubleshooting.md)
 
 
 
