@@ -1,0 +1,45 @@
+# Secrets / environment files
+.env
+.env.*
+*.env
+!*.example.env
+
+# Keys / certificates
+*.key
+*.pem
+*.p12
+*.pfx
+*.pub
+.ssh/
+
+# Secret files
+secrets.*
+credentials.*
+
+# Backups / temporary files
+*.bak
+*.backup
+*.tmp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Runtime / generated data
+node_modules/
+**/data/
+**/cache/
+**/logs/
+
+# Editor files
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
